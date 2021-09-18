@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const { tryCatchWrapper } = require("../helpers/try-catch-wrapper");
-const { getOneUser } = require("./users.controller");
+const { tryCatchWrapper } = require("../../helpers/try-catch-wrapper");
+const { getOneUser } = require("../controllers/users.controller");
 
 const router = Router();
 

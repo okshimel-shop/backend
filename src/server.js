@@ -3,12 +3,13 @@ const express = require("express");
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
-const { sequelize } = require('./db/db.config')
+const { sequelize } = require('./db/config')
 
 //Routers
-const { categoriesRouter } = require("./categories/categories.router");
-const { productsRouter } = require("./products/products.router");
-const { usersRouter } = require("./users/users.router");
+const { typesRouter } = require("./services/routers/types.router");
+const { categoriesRouter } = require("./services/routers/categories.router");
+const { productsRouter } = require("./services/routers/products.router");
+const { usersRouter } = require("./services/routers/users.router");
 
 exports.Server = class Server {
   constructor() {
@@ -47,6 +48,7 @@ exports.Server = class Server {
   }
 
   initRoutes() {
+    this.app.use("/types", typesRouter);
     this.app.use("/categories", categoriesRouter);
     this.app.use("/products", productsRouter);
     this.app.use("/users", usersRouter);

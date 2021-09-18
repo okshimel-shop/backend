@@ -1,6 +1,6 @@
-const { User } = require('./user.model');
 const { Op } = require("sequelize");
 const uuid = require("uuid").v4;
+const { User } = require('../models')
 
 const fsPromises = require("fs").promises;
 const path = require("path");

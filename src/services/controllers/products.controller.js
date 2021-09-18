@@ -1,13 +1,13 @@
 const { Op } = require("sequelize");
 const remove = require('remove');
 const path = require("path");
-const { Products } = require('./product.model');
-const { imageCompresHandler } = require("../helpers/imageCompressor");
+const { imageCompresHandler } = require("../../helpers/imageCompressor");
+const { Product } = require('../models')
 
 exports.createProduct = async function createProduct(req, res, next) {
   const { files, body } = req
 
-  const createdProduct = await Products.create(body).then(({ dataValues }) => dataValues).catch(err => next(err))
+  const createdProduct = await Product.create(body).then(({ dataValues }) => dataValues).catch(err => next(err))
 
   const imageUrlArr = await Promise.all(files.map(async (img) => {
     const productId = createdProduct.id
@@ -24,7 +24,7 @@ exports.createProduct = async function createProduct(req, res, next) {
 
   const filteredUrlArr = imageUrlArr.filter(url => !!url)
 
-  await Products.update({ images: filteredUrlArr }, {
+  await Product.update({ images: filteredUrlArr }, {
     where: {
       id: createdProduct.id
     }
@@ -42,7 +42,7 @@ exports.getOneProduct = async function getOneProduct(req, res, next) {
   const { id } = req.params
   const { viewed } = req.query
 
-  const foundProduct = await Products.findOne({
+  const foundProduct = await Product.findOne({
     where: {
       id
     }
@@ -53,7 +53,7 @@ exports.getOneProduct = async function getOneProduct(req, res, next) {
   const { views } = foundProduct
 
   if (viewed === 'false') {
-    const request = await Products.update({
+    const request = await Product.update({
       views: views + 1,
       allviews: views + 1,
     }, {
@@ -74,13 +74,11 @@ exports.getOneProduct = async function getOneProduct(req, res, next) {
 exports.listAllProducts = async function listAllProducts(req, res, next) {
   const { page, limit } = req.query
 
-  const allProducts = await Products.findAndCountAll({
+  const allProducts = await Product.findAndCountAll({
     order: [['id', 'DESC']],
-    offset: page * limit,
-    limit: +limit,
-  })
-    .then(res => res)
-    .catch(err => next(err))
+    offset: page * limit || null,
+    limit: +limit || null,
+  }).catch(err => next(err))
 
   res.status(200).send(allProducts)
 };
@@ -88,7 +86,7 @@ exports.listAllProducts = async function listAllProducts(req, res, next) {
 exports.listPopularProducts = async function listPopularProducts(req, res, next) {
   const { limit } = req.query
 
-  const popularProducts = await Products.findAll({
+  const popularProducts = await Product.findAll({
     order: [['views', 'DESC']],
     limit: +limit,
   })
@@ -101,7 +99,7 @@ exports.listPopularProducts = async function listPopularProducts(req, res, next)
 exports.listDiscountProducts = async function listDiscountProducts(req, res, next) {
   const { limit } = req.query
 
-  const discountProducts = await Products.findAll({
+  const discountProducts = await Product.findAll({
     order: [['price', 'ASC']],
     limit: +limit,
   })
@@ -114,7 +112,7 @@ exports.listDiscountProducts = async function listDiscountProducts(req, res, nex
 exports.listNewProducts = async function listNewProducts(req, res, next) {
   const { limit } = req.query
 
-  const newProducts = await Products.findAll({
+  const newProducts = await Product.findAll({
     order: [['createdAt', 'DESC']],
     limit: +limit,
   })
@@ -129,7 +127,7 @@ exports.listProductsByIds = async function listProductsByIds(req, res, next) {
 
   const idsArr = Object.values(query).map(item => +item)
 
-  const findedProducts = await Products.findAll({
+  const findedProducts = await Product.findAll({
     where: {
       id: {
         [Op.in]: idsArr
@@ -149,7 +147,7 @@ exports.deleteOneProduct = async function deleteOneProduct(req, res, next) {
     ignoreMissing: true
   })
 
-  await Products.destroy({
+  await Product.destroy({
     where: {
       id
     }

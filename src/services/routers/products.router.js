@@ -1,7 +1,16 @@
 const { Router } = require("express");
-const { upload } = require("../helpers/imageWriter");
-const { tryCatchWrapper } = require("../helpers/try-catch-wrapper");
-const { createProduct, getOneProduct, listAllProducts, listPopularProducts, listDiscountProducts, listNewProducts, listProductsByIds, deleteOneProduct } = require("./products.controller");
+const { upload } = require("../../helpers/imageWriter");
+const { tryCatchWrapper } = require("../../helpers/try-catch-wrapper");
+const { 
+  createProduct, 
+  getOneProduct, 
+  listAllProducts, 
+  listPopularProducts, 
+  listDiscountProducts, 
+  listNewProducts, 
+  listProductsByIds, 
+  deleteOneProduct 
+} = require("../controllers/products.controller");
 
 const router = Router();
 

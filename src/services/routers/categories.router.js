@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const { tryCatchWrapper } = require("../helpers/try-catch-wrapper");
-const { listAllCategories } = require("./categories.controller");
+const { tryCatchWrapper } = require("../../helpers/try-catch-wrapper");
+const { listAllCategories } = require("../controllers/categories.controller");
 
 const router = Router();
 
