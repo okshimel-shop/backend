@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
-    directory: {
+    dirTag: {
       unique: true,
       allowNull: false,
       type: DataTypes.STRING
@@ -28,10 +28,19 @@ module.exports = (sequelize, DataTypes) => {
     Type.associate = function(models) {
       this.hasMany(models.Category, { foreignKey: 'typeId', as: "categories" })
 
-      this.addScope('withCategories', {
+      this.addScope('withAssociatedData', {
         include: {
           model: models.Category,
-          as: "categories"
+          as: "categories",
+          include: {
+            model: models.Subcategory,
+            as: "subcategories",
+            include: {
+              model: models.Product,
+              as: "products",
+              attributes: ['id'],
+            },
+          }
         },
       })
   }

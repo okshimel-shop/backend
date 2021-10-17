@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
-    category: {
+    subcategoryId: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     price: {
       allowNull: false,
@@ -56,8 +56,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {})
-  Product.associate = function(_models) {
-  // associations can be defined here
+  Product.associate = function(models) {
+    this.belongsTo(models.Subcategory, { foreignKey: 'subcategoryId', as: 'subcategory' })
+
+    this.addScope('withAssociatedData', {
+      include: {
+        model: models.Subcategory,
+        as: "subcategory",
+        include: {
+          model: models.Category,
+          as: "category",
+          include: {
+            model: models.Type,
+            as: "type"
+          }
+        }
+      },
+    })
   }
   return Product
 }

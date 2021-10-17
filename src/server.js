@@ -8,6 +8,7 @@ const { sequelize } = require('./db/config')
 //Routers
 const { typesRouter } = require("./services/routers/types.router");
 const { categoriesRouter } = require("./services/routers/categories.router");
+const { subcategoriesRouter } = require("./services/routers/subcategories.router");
 const { productsRouter } = require("./services/routers/products.router");
 const { usersRouter } = require("./services/routers/users.router");
 
@@ -50,6 +51,7 @@ exports.Server = class Server {
   initRoutes() {
     this.app.use("/types", typesRouter);
     this.app.use("/categories", categoriesRouter);
+    this.app.use("/subcategories", subcategoriesRouter);
     this.app.use("/products", productsRouter);
     this.app.use("/users", usersRouter);
   }

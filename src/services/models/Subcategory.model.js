@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-  const Category = sequelize.define('Category', {
+  const Subcategory = sequelize.define('Subcategory', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    typeId: {
+    categoryId: {
       allowNull: false,
       type: DataTypes.INTEGER 
     },
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     dirTag: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING 
     },
     createdAt: {
       allowNull: false,
@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {})
-  Category.associate = function(models) {
-    this.belongsTo(models.Type, { foreignKey: 'typeId', as: "type" })
-    this.hasMany(models.Subcategory, { foreignKey: 'categoryId', as: "subcategories" })
+  Subcategory.associate = function(models) {
+    this.belongsTo(models.Category, { foreignKey: 'categoryId', as: 'category' })
+    this.hasMany(models.Product, { foreignKey: 'subcategoryId', as: "products" })
   }
-  return Category
+  return Subcategory
 }

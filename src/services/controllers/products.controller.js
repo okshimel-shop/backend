@@ -42,7 +42,7 @@ exports.getOneProduct = async function getOneProduct(req, res, next) {
   const { id } = req.params
   const { viewed } = req.query
 
-  const foundProduct = await Product.findOne({
+  const foundProduct = await Product.scope(['withAssociatedData']).findOne({
     where: {
       id
     }
@@ -53,7 +53,7 @@ exports.getOneProduct = async function getOneProduct(req, res, next) {
   const { views } = foundProduct
 
   if (viewed === 'false') {
-    const request = await Product.update({
+    await Product.update({
       views: views + 1,
       allviews: views + 1,
     }, {
