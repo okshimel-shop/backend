@@ -1,31 +1,31 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define('User', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
     },
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: Sequelize.STRING
     },
     email: {
       unique: true,
       allowNull: false,
-      type: DataTypes.STRING
+      type: Sequelize.STRING
     },
     password: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: Sequelize.STRING
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
     },
   }, {})
   User.associate = function(_models) {

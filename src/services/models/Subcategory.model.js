@@ -1,30 +1,36 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, Sequelize) => {
   const Subcategory = sequelize.define('Subcategory', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
     },
     categoryId: {
       allowNull: false,
-      type: DataTypes.INTEGER 
+      type: Sequelize.INTEGER,
+      references: {
+          model: {
+            tableName: 'Categories',
+          },
+          key: 'id'
+        },
     },
     title: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: Sequelize.STRING
     },
     dirTag: {
       allowNull: false,
-      type: DataTypes.STRING 
+      type: Sequelize.STRING 
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
     },
   }, {})
   Subcategory.associate = function(models) {

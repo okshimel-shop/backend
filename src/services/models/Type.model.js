@@ -1,28 +1,28 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, Sequelize) => {
   const Type = sequelize.define('Type', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
     },
     title: {
       unique: true,
       allowNull: false,
-      type: DataTypes.STRING
+      type: Sequelize.STRING
     },
     dirTag: {
       unique: true,
       allowNull: false,
-      type: DataTypes.STRING
+      type: Sequelize.STRING
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
     }
   }, {})
     Type.associate = function(models) {

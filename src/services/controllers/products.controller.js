@@ -7,7 +7,7 @@ const { Product } = require('../models')
 exports.createProduct = async function createProduct(req, res, next) {
   const { files, body } = req
 
-  const createdProduct = await Product.create(body).then(({ dataValues }) => dataValues).catch(err => next(err))
+  const createdProduct = await Product.create(body).catch(err => next(err))
 
   const imageUrlArr = await Promise.all(files.map(async (img) => {
     const productId = createdProduct.id
@@ -89,9 +89,7 @@ exports.listPopularProducts = async function listPopularProducts(req, res, next)
   const popularProducts = await Product.findAll({
     order: [['views', 'DESC']],
     limit: +limit,
-  })
-    .then(res => res)
-    .catch(err => next(err))
+  }).catch(err => next(err))
 
   res.status(200).send(popularProducts)
 };
@@ -102,9 +100,7 @@ exports.listDiscountProducts = async function listDiscountProducts(req, res, nex
   const discountProducts = await Product.findAll({
     order: [['price', 'ASC']],
     limit: +limit,
-  })
-    .then(res => res)
-    .catch(err => next(err))
+  }).catch(err => next(err))
 
   res.status(200).send(discountProducts)
 };
@@ -115,9 +111,7 @@ exports.listNewProducts = async function listNewProducts(req, res, next) {
   const newProducts = await Product.findAll({
     order: [['createdAt', 'DESC']],
     limit: +limit,
-  })
-    .then(res => res)
-    .catch(err => next(err))
+  }).catch(err => next(err))
 
   res.status(200).send(newProducts)
 };
@@ -133,9 +127,7 @@ exports.listProductsByIds = async function listProductsByIds(req, res, next) {
         [Op.in]: idsArr
       }
     }
-  })
-    .then(res => res)
-    .catch(err => next(err))
+  }).catch(err => next(err))
 
   res.status(200).send(findedProducts)
 };
@@ -151,9 +143,7 @@ exports.deleteOneProduct = async function deleteOneProduct(req, res, next) {
     where: {
       id
     }
-  })
-    .then(res => res)
-    .catch(err => next(err))
+  }).catch(err => next(err))
 
   res.status(200).send({ status: true })
 };

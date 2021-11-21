@@ -1,59 +1,84 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, Sequelize) => {
   const Product = sequelize.define('Product', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
     },
     title: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: Sequelize.STRING
     },
     subcategoryId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
     },
     price: {
       allowNull: false,
       defaultValue: 0,
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
     },
     amount: {
       allowNull: false,
       defaultValue: 0,
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
+    },
+    size: {
+      allowNull: false,
+      defaultValue: 0,
+      type: Sequelize.INTEGER
+    },
+    material: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    color: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    age: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    gender: {
+      allowNull: false,
+      type: Sequelize.STRING
     },
     descriptions: {
       allowNull: false,
-      type: DataTypes.TEXT
+      type: Sequelize.TEXT
     },
     keywords: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: Sequelize.STRING
+    },
+    video: {
+      allowNull: false,
+      type: Sequelize.STRING
     },
     images: {
       allowNull: false,
       defaultValue: [],
-      type: DataTypes.JSON
+      type: Sequelize.JSON
     },
     views: {
       allowNull: false,
       defaultValue: 0,
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
     },
     allviews: {
       allowNull: false,
       defaultValue: 0,
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
     },
   }, {})
   Product.associate = function(models) {

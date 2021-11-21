@@ -4,9 +4,15 @@
   "description": "",
   "main": "backend.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node backend.js",
-    "dev": "nodemon backend.js"
+    "dev": "nodemon backend.js",
+    "initialize": "npm i && npm run drop && npm run create && npm run migrate",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "migrate:undo:all": "npx sequelize-cli db:migrate:undo:all",
+    "create": "npx sequelize-cli db:create --charset utf8mb4 --collate utf8mb4_general_ci",
+    "drop": "npx sequelize-cli db:drop",
+    "skeleton": "npx sequelize-cli migration:generate --name NEW_MIGRATION"
   },
   "keywords": [],
   "author": "Andrew Oskolok",
@@ -27,6 +33,7 @@
     "path": "^0.12.7",
     "remove": "^0.1.5",
     "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0",
     "shortid": "^2.2.16",
     "uuid": "^8.3.1"
   }
